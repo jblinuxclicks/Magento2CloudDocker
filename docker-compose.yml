@@ -1,8 +1,13 @@
 version: '2'
 services:
   db:
-    image: mariadb:10.4
+    image: 'mariadb:10.4'
     restart: 'always'
+    environment:
+      - MYSQL_ROOT_PASSWORD=magento2
+      - MYSQL_DATABASE=magento2
+      - MYSQL_USER=magento2
+      - MYSQL_PASSWORD=magento2
     hostname: db.magento2.docker
     ports:
       - '3306'
@@ -13,23 +18,33 @@ services:
     volumes:
       - ./mysql/data:/var/lib/mysql
       - ./mysql/conf:/etc/mysql/conf.d
-    environment:
-      - MYSQL_ROOT_PASSWORD=magento2
-      - MYSQL_DATABASE=magento2
-      - MYSQL_USER=magento2
-      - MYSQL_PASSWORD=magento2
-      - TERM=meh
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    restart: 'always'
-    links: 
-      - db:db
-    ports:
-      - 8000:80
-    environment:
-      - MYSQL_USER=magento2
-      - MYSQL_PASSWORD=magento2
-      - MYSQL_ROOT_PASSWORD=magento2   
+  # redis:
+  #   image: 'redis:3.0'
+  #   volumes:
+  #     - /data
+  #   ports:
+  #     - 6379
+  #   networks:
+  #     - magento
+  # elasticsearch:
+  #   image: 'domw/magento2-cloud-elasticsearch:7.6'
+  #   networks:
+  #     - magento      
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin
+  #   restart: 'always'
+  #   ports:
+  #     - 8000:80
+  #   networks:
+  #     magento:
+  #       aliases:
+  #         - phpmyadmin.magento2.docker    
+  #   links: 
+  #     - db:db
+  #   environment:
+  #     - MYSQL_USER=magento2
+  #     - MYSQL_PASSWORD=magento2
+  #     - MYSQL_ROOT_PASSWORD=magento2   
   web:
     image: 'domw/magento2-cloud-nginx:1.9'
     extends: generic
@@ -55,7 +70,7 @@ services:
       - 'app:/app'
     networks:
       - magento
-  deploy:
+  cli:
     image: 'domw/magento2-cloud-php:7.2-cli'
     extends: generic
     hostname: deploy.magento2.docker
@@ -83,17 +98,17 @@ services:
       magento:
         aliases:
           - magento2.docker
-  # tls:
-  #   image: 'domw/magento2-cloud-tls:latest'
-  #   restart: 'always'
-  #   ports:
-  #     - '443:443'
-  #   external_links:
-  #     - 'varnish:varnish'
-  #   depends_on:
-  #     - varnish
-  #   networks:
-  #     - magento        
+  tls:
+    image: 'domw/magento2-cloud-tls:latest'
+    restart: 'always'
+    ports:
+      - '443:443'
+    external_links:
+      - 'varnish:varnish'
+    depends_on:
+      - varnish
+    networks:
+      - magento        
   generic:
     image: alpine
     environment:

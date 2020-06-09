@@ -211,6 +211,8 @@ ADD bin/* /usr/local/bin/
 
 RUN groupadd -g 1000 www && useradd -g 1000 -u 1000 -d ${MAGENTO_ROOT} -s /bin/bash www
 
+RUN sed -i '/imklog/s/^/#/' /etc/rsyslog.conf
+
 ADD docker-entrypoint.sh /docker-entrypoint.sh
 
 RUN ["chmod", "+x", \
