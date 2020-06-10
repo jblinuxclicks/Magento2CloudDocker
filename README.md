@@ -156,7 +156,7 @@ elasticsearch versions: 1.7, 2.4, 5.2, 6.5, 6.8, 7.5, 7.6
 
 ## Example stack
 
-- [Docker Hub](https://github.com/DominicWatts/Magento2CloudDocker/blob/master/docker-compose.yml)
+- [Docker Composer](https://github.com/DominicWatts/Magento2CloudDocker/blob/master/docker-compose.yml)
 
 ```
 version: '2'
@@ -307,9 +307,15 @@ networks:
     driver: bridge
 ```
 
-## Notes:
+## Notes
 
 Optional components
 
   - cron
   - phpmyadmin
+  - elasticsearch
+  - redis
+  
+## Todo
+
+  -  Mailhog impementation
