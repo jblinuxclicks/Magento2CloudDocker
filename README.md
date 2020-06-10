@@ -18,6 +18,10 @@ Run cron
 
     docker-compose run --rm cli run-cron
 
+Or safer
+
+    docker-compose run --rm cli magento-command cron:run
+
 Run installer
 
     docker-compose run --rm cli magento-command setup:install --admin-firstname Admin --admin-lastname User [...]
