@@ -1,2 +1,7 @@
+
+/.vscode
+/.idea
 /app
 /mysql/data
+*.zip
+*.sql

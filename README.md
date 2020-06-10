@@ -10,19 +10,50 @@ Configured with persistent storage
 
 Extract Magento open source to `/app`
 
-### Start stack
+### Generic
+
+Pull
+
+    docker-compose pull
+
+Up / Down / Start / Stop
 
     docker-compose up -d
-
-### End stack
-
     docker-compose down -v
+    docker-compose start
+    docker-compose stop
+    
+Restart
+
+    docker-compose restart
+    
+### Bash
+
+    docker-compose run --rm cli
+    
+Or
+
+    docker-compose run --rm cli bash 
     
 ### Composer
 
+#### Indirectly
+
     docker-compose run --rm cli 
     
+Defaults inside `/app`
+   
     composer --version
+    composer install -vv
+    composer require vendor/module:version -vv
+    
+#### Directly
+
+    docker-compose run --rm cli composer --version
+    docker-compose run --rm cli composer install -vv
+    docker-compose run --rm cli composer require vendor/module:version -vv
+
+Warning: permissions
 
 ### Magento command
 
@@ -61,6 +92,18 @@ Extract Magento open source to `/app`
 With files extracted to `/app` run CLI install process
 
     docker-compose run --rm cli magento-command setup:install --admin-firstname Admin --admin-lastname User [...]
+
+### Flush redis
+
+    docker-compose exec redis redis-cli FLUSHALL
+    
+### Flush varnish
+
+    docker-compose exec varnish varnishadm ban req.url '~' '.'
+    
+### Access DB CLI
+
+    docker-compose exec db sh -c 'mysql -u magento2 -pmagento2 magento2 "$@"'
 
 ### Optional 
 
@@ -318,4 +361,4 @@ Optional components
   
 ## Todo
 
-  -  Mailhog impementation
+  -  Mailhog implementation
