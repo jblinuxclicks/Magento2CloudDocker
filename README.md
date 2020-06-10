@@ -10,6 +10,14 @@ Configured with persistent storage
 
 Extract Magento open source to `/app`
 
+Start stack
+
+    docker-compose up -d
+
+End stack
+
+    docker-compose down -v
+
 Magento command
 
     docker-compose run --rm cli magento-command
@@ -22,7 +30,7 @@ Or safer
 
     docker-compose run --rm cli magento-command cron:run
 
-Run installer
+Run CLI installer
 
     docker-compose run --rm cli magento-command setup:install --admin-firstname Admin --admin-lastname User [...]
 
@@ -42,7 +50,7 @@ Configure magento to use redis, elasticsearch and varnish if you choose to run t
 
     docker push domw/magento2-cloud-nginx:1.9
 
-ngingx versions: 1.9
+nginx versions: 1.9, 1.10
 
 ### php-fpm
 

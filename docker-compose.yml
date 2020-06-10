@@ -108,7 +108,20 @@ services:
     depends_on:
       - varnish
     networks:
-      - magento        
+      - magento    
+  # cron:
+  #   hostname: cron.magento2.docker
+  #   image: 'domw/magento2-cloud-php:7.2-cli'
+  #   extends: generic
+  #   command: run-cron
+  #   environment:
+  #     CRONTAB: '* * * * * root cd /app && /usr/local/bin/php bin/magento cron:run >> /app/var/log/cron.log'
+  #   volumes:
+  #     - 'app:/app'
+  #   networks:
+  #     magento:
+  #       aliases:
+  #         - cron.magento2.docker    
   generic:
     image: alpine
     environment:
