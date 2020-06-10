@@ -37,6 +37,10 @@ Or
     
 ### Composer
 
+#### Install command
+
+    docker-compose run --rm cli composer-installer vendor/module
+
 #### Indirectly
 
     docker-compose run --rm cli 
