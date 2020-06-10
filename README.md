@@ -1,6 +1,6 @@
 # Magento 2 CloudDocker for Open Source Edition
 
-Inspired by [magento/magento-cloud-docker] https://github.com/magento/magento-cloud-docker
+Inspired by [magento/magento-cloud-docker](https://github.com/magento/magento-cloud-docker)
 
 I extracted official Dockerfile files, applied some minor fixes and built a docker-composer.yml capable of running open source edition 
 
