@@ -28,7 +28,6 @@ RUN apt-get update \
   python3 \
   python3-pip \
   redis-tools \
-  rsyslog \
   sendmail \
   sendmail-bin \
   sudo \
@@ -206,8 +205,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 ADD bin/* /usr/local/bin/
 
 RUN groupadd -g 1000 www && useradd -g 1000 -u 1000 -d ${MAGENTO_ROOT} -s /bin/bash www
-
-RUN sed -i '/imklog/s/^/#/' /etc/rsyslog.conf
 
 ADD docker-entrypoint.sh /docker-entrypoint.sh
 
