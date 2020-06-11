@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -e
+
+[ "$DEBUG" = "true" ] && set -x
+
+MAGENTO_COMMAND="composer require -d $MAGENTO_ROOT"
+VERBOSE="-vv"
+
+echo "Start"
+
+$MAGENTO_COMMAND "$@" $VERBOSE
+
+echo "Setting file permissions."
+
+chown -R www:www $MAGENTO_ROOT/vendor
+
+find $MAGENTO_ROOT/vendor -type f -exec chmod 664 {} \;
+find $MAGENTO_ROOT/vendor -type d -exec chmod 775 {} \;
+
+echo "Finish"
