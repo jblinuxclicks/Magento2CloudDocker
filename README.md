@@ -362,7 +362,30 @@ Optional components
   - phpmyadmin
   - elasticsearch
   - redis
+  - mailhog
   
-## Todo
+## Mailhog
 
-  -  Mailhog implementation
+### Container
+
+```yml
+  mail:
+    image: mailhog/mailhog
+    restart: 'always'
+    ports:
+      - 1025:1025
+      - 8025:8025
+    links:
+      - fpm
+      - db
+    networks:
+      - magento
+```
+
+### SMTP extension config
+
+  -  host: `mail`
+  -  port: `1025`
+  -  protocol: `none`
+  -  authentication: `plain`
+  -  username/password: `[blank]`
