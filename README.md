@@ -6,6 +6,8 @@ I extracted official Dockerfile files, applied some minor fixes and built a dock
 
 Configured with persistent storage
 
+[Quickstart Guide](QUICKSTART.md)
+
 ## Usage
 
 Extract Magento open source to `/app`
