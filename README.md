@@ -329,7 +329,18 @@ services:
   #   networks:
   #     magento:
   #       aliases:
-  #         - cron.magento2.docker    
+  #         - cron.magento2.docker
+  # mail:
+  #   image: mailhog/mailhog
+  #   restart: 'always'
+  #   ports:
+  #     - 1025:1025
+  #     - 8025:8025
+  #   links:
+  #     - fpm
+  #     - db
+  #   networks:
+  #     - magento
   generic:
     image: alpine
     environment:
