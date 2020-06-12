@@ -340,6 +340,12 @@ Optional components
   - redis
   - mailhog
   
+### Tweaks
+
+PHP settings can be adjusted via
+
+    `./app/php.ini`
+  
 ## Mailhog
 
 ### Container
