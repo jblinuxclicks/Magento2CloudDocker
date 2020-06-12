@@ -48,3 +48,9 @@ http://magento2.docker/setup/
   - **db name:** magento2
   - **db user:** magento2
   - **db password:** magento2
+  
+## 7 Tweak
+
+PHP settings can be adjusted via
+
+    `./app/php.ini`
