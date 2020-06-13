@@ -7,6 +7,7 @@ I extracted official Dockerfile files, applied some minor fixes and built a dock
 Configured with persistent storage
 
 [Quickstart Guide](QUICKSTART.md)
+[New Relic Guide](NEWRELIC.md)
 
 ## Usage
 

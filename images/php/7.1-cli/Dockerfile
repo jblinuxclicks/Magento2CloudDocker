@@ -150,6 +150,12 @@ RUN cd /tmp \
   && cp "./ioncube/ioncube_loader_lin_${PHP_VERSION}.so" "${PHP_EXT_DIR}/ioncube.so" \
   && rm -rf ./ioncube \
   && rm ioncube_loaders_lin_x86-64.tar.gz
+RUN \
+  curl -L https://github.com/DominicWatts/newrelic-php-agent/raw/5-9.10.1.263/newrelic-php5-9.10.1.263-linux.tar.gz  | tar -C /tmp -zx && \
+  export NR_INSTALL_USE_CP_NOT_LN=1 && \
+  export NR_INSTALL_SILENT=1 && \
+  /tmp/newrelic-php5-*/newrelic-install install && \
+  rm -rf /tmp/newrelic-php5-* /tmp/nrinstall*
 
 RUN docker-php-ext-enable \
   bcmath \

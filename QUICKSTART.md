@@ -30,6 +30,12 @@ Download magento from https://magento.com/tech-resources/download
  
 ## 5 Start Containers
 
+Copy tokens into newrelic.ini
+
+    cp newrelic/newrelic.sample.ini newrelic/newrelic.ini
+
+Start Docker
+
     docker compose up -d
     
 Note: wait for MySQL to initialise if running for first time

@@ -5,3 +5,4 @@
 /mysql/data
 *.zip
 *.sql
+/newrelic/newrelic.ini

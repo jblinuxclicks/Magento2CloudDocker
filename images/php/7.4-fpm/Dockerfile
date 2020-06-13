@@ -108,6 +108,12 @@ RUN rm -f /usr/local/etc/php/conf.d/*sodium.ini \
   && cd / \
   && rm -rf /tmp/libsodium  \
   && pecl install -o -f libsodium
+RUN \
+  curl -L https://github.com/DominicWatts/newrelic-php-agent/raw/5-9.10.1.263/newrelic-php5-9.10.1.263-linux.tar.gz  | tar -C /tmp -zx && \
+  export NR_INSTALL_USE_CP_NOT_LN=1 && \
+  export NR_INSTALL_SILENT=1 && \
+  /tmp/newrelic-php5-*/newrelic-install install && \
+  rm -rf /tmp/newrelic-php5-* /tmp/nrinstall*
 
 RUN docker-php-ext-enable \
   bcmath \

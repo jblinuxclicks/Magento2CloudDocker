@@ -30,21 +30,21 @@ services:
   #   image: 'domw/magento2-cloud-elasticsearch:7.6'
   #   networks:
   #     - magento      
-  # phpmyadmin:
-  #   image: phpmyadmin/phpmyadmin
-  #   restart: 'always'
-  #   ports:
-  #     - 8000:80
-  #   networks:
-  #     magento:
-  #       aliases:
-  #         - phpmyadmin.magento2.docker    
-  #   links: 
-  #     - db:db
-  #   environment:
-  #     - MYSQL_USER=magento2
-  #     - MYSQL_PASSWORD=magento2
-  #     - MYSQL_ROOT_PASSWORD=magento2   
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: 'always'
+    ports:
+      - 8000:80
+    networks:
+      magento:
+        aliases:
+          - phpmyadmin.magento2.docker    
+    links: 
+      - db:db
+    environment:
+      - MYSQL_USER=magento2
+      - MYSQL_PASSWORD=magento2
+      - MYSQL_ROOT_PASSWORD=magento2   
   web:
     image: 'domw/magento2-cloud-nginx:1.9'
     extends: generic
@@ -68,6 +68,7 @@ services:
       - db
     volumes:
       - 'app:/app'
+      - ./newrelic/newrelic.ini:/usr/local/etc/php/conf.d/newrelic.ini
     networks:
       - magento
   cli:
@@ -79,6 +80,7 @@ services:
     volumes:
       - 'app:/app'
       - '~/.composer/cache:/root/.composer/cache:delegated'
+      - ./newrelic/newrelic.ini:/usr/local/etc/php/conf.d/newrelic.ini
     networks:
       magento:
         aliases:
