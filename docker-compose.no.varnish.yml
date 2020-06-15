@@ -155,7 +155,7 @@ volumes:
   app:
     driver_opts:
       type: none
-      device: '${PWD}/app'
+      device: '${PWD}/htdocs'
       o: bind
 networks:
   magento:
