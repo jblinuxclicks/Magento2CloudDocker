@@ -46,7 +46,7 @@ services:
       - MYSQL_PASSWORD=magento2
       - MYSQL_ROOT_PASSWORD=magento2   
   web:
-    image: 'domw/magento2-cloud-nginx:1.9'
+    image: 'domw/magento2-cloud-nginx:1.17'
     extends: generic
     hostname: web.magento2.docker
     restart: 'always'
