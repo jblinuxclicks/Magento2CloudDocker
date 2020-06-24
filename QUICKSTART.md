@@ -37,6 +37,10 @@ Copy tokens into newrelic.ini
 Start Docker
 
     docker compose up -d
+
+Or specific config file
+
+    docker-compose -f docker-compose.no.varnish.yml up -d
     
 Note: wait for MySQL to initialise if running for first time
  

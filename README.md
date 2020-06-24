@@ -38,6 +38,10 @@ Restart
 Or
 
     docker-compose run --rm cli bash 
+
+Or specific config
+
+    docker-compose -f docker-compose.no.varnish.yml run --rm cli
     
 ### Composer
 

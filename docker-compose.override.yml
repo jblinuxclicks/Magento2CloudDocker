@@ -1,0 +1,12 @@
+version: '2.0'
+services:
+  db:
+    ports:
+      - 3306:3306
+  redis:
+    ports:
+      - 6379:6379
+  elasticsearch:
+    ports:
+      - 9200:9200
+      - 9300:9300
