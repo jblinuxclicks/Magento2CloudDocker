@@ -44,6 +44,7 @@ RUN apt-get update \
   libgpgme11-dev \
   libmagickwand-dev \
   libmagickcore-dev \
+  libmcrypt-dev \ 
   libc-client-dev \
   libkrb5-dev \
   libicu-dev \
@@ -91,6 +92,8 @@ RUN docker-php-ext-install -j$(nproc) \
   imap \
   intl \
   ldap \
+  mbstring \ 
+  mcrypt \
   mysqli \
   opcache \
   pdo_mysql \
