@@ -63,4 +63,4 @@ http://magento2.docker/setup/
 
 PHP settings can be adjusted via
 
-    `./app/php.ini`
+    `./htdocs/php.ini`
