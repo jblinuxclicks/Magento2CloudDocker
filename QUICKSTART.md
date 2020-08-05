@@ -49,6 +49,12 @@ Note: wait for MySQL to initialise if running for first time
 ### 6.1 CLI
 
     docker-compose run --rm cli magento-command setup:install --admin-firstname Admin --admin-lastname User --admin-email dominic@xigen.co.uk --admin-user admin --admin-password test123 --base-url http://magento2.docker/ --base-url-secure https://magento2.docker/ --backend-frontname xpanel --db-host db --db-name magento2 --db-user magento2 --db-password magento2 --language en_GB --currency GBP --timezone UTC --use-rewrites 1 --session-save files --use-secure 1 --use-secure-admin 1
+    
+### 6.2 Elasticsearch
+
+New for magento 2.4 - above command plus two additional arguments
+
+    --elasticsearch-host elasticsearch --elasticsearch-port 9200
 
 ### 6.2 Web Setup Wizard
 
