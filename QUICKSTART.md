@@ -30,7 +30,7 @@ Download magento from https://magento.com/tech-resources/download
  
 ## 5 Start Containers
 
-Copy tokens into newrelic.ini
+Copy newrelic.sample.ini config file to newrelic.ini and add new tokens if required
 
     cp newrelic/newrelic.sample.ini newrelic/newrelic.ini
 
