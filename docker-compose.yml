@@ -53,7 +53,12 @@ services:
     depends_on:
       - fpm
     volumes:
-      - './htdocs:/app:delegated'
+      - './htdocs:/app:ro,delegated'
+      - './htdocs/generated:/app/generated:rw,delegated'
+      - './htdocs/var:/app/var:rw,delegated'
+      - './htdocs/app/etc:/app/app/etc:rw,delegated'
+      - './htdocs/pub/media:/app/pub/media:rw,delegated'
+      - './htdocs/pub/static:/app/pub/static:rw,delegated'
     networks:
       magento:
         aliases:
@@ -67,7 +72,12 @@ services:
     depends_on:
       - db
     volumes:
-      - './htdocs:/app:delegated'
+      - './htdocs:/app:ro,delegated'
+      - './htdocs/generated:/app/generated:rw,delegated'
+      - './htdocs/var:/app/var:rw,delegated'
+      - './htdocs/app/etc:/app/app/etc:rw,delegated'
+      - './htdocs/pub/media:/app/pub/media:rw,delegated'
+      - './htdocs/pub/static:/app/pub/static:rw,delegated'
       - './newrelic/newrelic.ini:/usr/local/etc/php/conf.d/newrelic.ini'
     networks:
       - magento
@@ -78,7 +88,12 @@ services:
     depends_on:
       - db
     volumes:
-      - './htdocs:/app:delegated'
+      - './htdocs:/app:ro,delegated'
+      - './htdocs/generated:/app/generated:rw,delegated'
+      - './htdocs/var:/app/var:rw,delegated'
+      - './htdocs/app/etc:/app/app/etc:rw,delegated'
+      - './htdocs/pub/media:/app/pub/media:rw,delegated'
+      - './htdocs/pub/static:/app/pub/static:rw,delegated'
       - '~/.composer/cache:/root/.composer/cache:delegated'
       - './newrelic/newrelic.ini:/usr/local/etc/php/conf.d/newrelic.ini'
     networks:
@@ -119,7 +134,12 @@ services:
   #   environment:
   #     CRONTAB: '* * * * * root cd /app && /usr/local/bin/php bin/magento cron:run >> /app/var/log/cron.log'
   #   volumes:
-  #     - './htdocs:/app:delegated'
+  #     - './htdocs:/app:ro,delegated'
+  #     - './htdocs/generated:/app/generated:rw,delegated'
+  #     - './htdocs/var:/app/var:rw,delegated'
+  #     - './htdocs/app/etc:/app/app/etc:rw,delegated'
+  #     - './htdocs/pub/media:/app/pub/media:rw,delegated'
+  #     - './htdocs/pub/static:/app/pub/static:rw,delegated'
   #   networks:
   #     magento:
   #       aliases:

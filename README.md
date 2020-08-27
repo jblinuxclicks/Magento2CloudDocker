@@ -197,42 +197,47 @@ services:
     volumes:
       - ./mysql/data:/var/lib/mysql
       - ./mysql/conf:/etc/mysql/conf.d
-  # redis:
-  #   image: 'redis:3.0'
-  #   volumes:
-  #     - /data
-  #   ports:
-  #     - 6379
-  #   networks:
-  #     - magento
-  # elasticsearch:
-  #   image: 'domw/magento2-cloud-elasticsearch:7.6'
-  #   networks:
-  #     - magento      
-  # phpmyadmin:
-  #   image: phpmyadmin/phpmyadmin
-  #   restart: 'always'
-  #   ports:
-  #     - 8000:80
-  #   networks:
-  #     magento:
-  #       aliases:
-  #         - phpmyadmin.magento2.docker    
-  #   links: 
-  #     - db:db
-  #   environment:
-  #     - MYSQL_USER=magento2
-  #     - MYSQL_PASSWORD=magento2
-  #     - MYSQL_ROOT_PASSWORD=magento2   
+  redis:
+    image: 'redis:3.0'
+    volumes:
+      - /data
+    ports:
+      - '6379'
+    networks:
+      - magento
+  elasticsearch:
+    image: 'domw/magento2-cloud-elasticsearch:7.6'
+    networks:
+      - magento      
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: 'always'
+    ports:
+      - 8000:80
+    networks:
+      magento:
+        aliases:
+          - phpmyadmin.magento2.docker    
+    links: 
+      - db:db
+    environment:
+      - MYSQL_USER=magento2
+      - MYSQL_PASSWORD=magento2
+      - MYSQL_ROOT_PASSWORD=magento2   
   web:
-    image: 'domw/magento2-cloud-nginx:1.9'
+    image: 'domw/magento2-cloud-nginx:1.17'
     extends: generic
     hostname: web.magento2.docker
     restart: 'always'
     depends_on:
       - fpm
     volumes:
-      - 'app:/app'
+      - './htdocs:/app:ro,delegated'
+      - './htdocs/generated:/app/generated:rw,delegated'
+      - './htdocs/var:/app/var:rw,delegated'
+      - './htdocs/app/etc:/app/app/etc:rw,delegated'
+      - './htdocs/pub/media:/app/pub/media:rw,delegated'
+      - './htdocs/pub/static:/app/pub/static:rw,delegated'
     networks:
       magento:
         aliases:
@@ -242,11 +247,17 @@ services:
     extends: generic
     restart: 'always'
     ports:
-      - 9000
+      - '9000'
     depends_on:
       - db
     volumes:
-      - 'app:/app'
+      - './htdocs:/app:ro,delegated'
+      - './htdocs/generated:/app/generated:rw,delegated'
+      - './htdocs/var:/app/var:rw,delegated'
+      - './htdocs/app/etc:/app/app/etc:rw,delegated'
+      - './htdocs/pub/media:/app/pub/media:rw,delegated'
+      - './htdocs/pub/static:/app/pub/static:rw,delegated'
+      - './newrelic/newrelic.ini:/usr/local/etc/php/conf.d/newrelic.ini'
     networks:
       - magento
   cli:
@@ -256,8 +267,14 @@ services:
     depends_on:
       - db
     volumes:
-      - 'app:/app'
+      - './htdocs:/app:ro,delegated'
+      - './htdocs/generated:/app/generated:rw,delegated'
+      - './htdocs/var:/app/var:rw,delegated'
+      - './htdocs/app/etc:/app/app/etc:rw,delegated'
+      - './htdocs/pub/media:/app/pub/media:rw,delegated'
+      - './htdocs/pub/static:/app/pub/static:rw,delegated'
       - '~/.composer/cache:/root/.composer/cache:delegated'
+      - './newrelic/newrelic.ini:/usr/local/etc/php/conf.d/newrelic.ini'
     networks:
       magento:
         aliases:
@@ -287,7 +304,7 @@ services:
     depends_on:
       - varnish
     networks:
-      - magento    
+      - magento
   # cron:
   #   hostname: cron.magento2.docker
   #   image: 'domw/magento2-cloud-php:7.2-cli'
@@ -296,7 +313,12 @@ services:
   #   environment:
   #     CRONTAB: '* * * * * root cd /app && /usr/local/bin/php bin/magento cron:run >> /app/var/log/cron.log'
   #   volumes:
-  #     - 'app:/app'
+  #     - './htdocs:/app:ro,delegated'
+  #     - './htdocs/generated:/app/generated:rw,delegated'
+  #     - './htdocs/var:/app/var:rw,delegated'
+  #     - './htdocs/app/etc:/app/app/etc:rw,delegated'
+  #     - './htdocs/pub/media:/app/pub/media:rw,delegated'
+  #     - './htdocs/pub/static:/app/pub/static:rw,delegated'
   #   networks:
   #     magento:
   #       aliases:
@@ -325,12 +347,6 @@ services:
       - MAGENTO_CLOUD_VARIABLES=eyJBRE1JTl9FTUFJTCI6ImFkbWluQGV4YW1wbGUuY29tIiwiQURNSU5fUEFTU1dPUkQiOiIxMjMxMjNxIiwiQURNSU5fVVJMIjoiYWRtaW4ifQ==
       - MAGENTO_RUN_MODE=default
       - 'PHP_EXTENSIONS=bcmath bz2 calendar exif gd gettext intl mysqli pcntl pdo_mysql soap sockets sysvmsg sysvsem sysvshm opcache zip redis xsl ioncube'
-volumes:
-  app:
-    driver_opts:
-      type: none
-      device: '${PWD}/htdocs'
-      o: bind
 networks:
   magento:
     driver: bridge
