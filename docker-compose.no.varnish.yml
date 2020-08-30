@@ -62,6 +62,7 @@ services:
       - './htdocs/app/etc:/app/app/etc:rw,delegated'
       - './htdocs/pub/media:/app/pub/media:rw,delegated'
       - './htdocs/pub/static:/app/pub/static:rw,delegated'
+      - './htdocs/vendor:/app/vendor:ro,delegated'
     networks:
       magento:
         aliases:
@@ -81,6 +82,7 @@ services:
       - './htdocs/app/etc:/app/app/etc:rw,delegated'
       - './htdocs/pub/media:/app/pub/media:rw,delegated'
       - './htdocs/pub/static:/app/pub/static:rw,delegated'
+      - './htdocs/vendor:/app/vendor:ro,delegated'
       - './newrelic/newrelic.ini:/usr/local/etc/php/conf.d/newrelic.ini'
     networks:
       - magento
@@ -91,14 +93,10 @@ services:
     depends_on:
       - db
     volumes:
-      - './htdocs:/app:ro,delegated'
-      - './htdocs/generated:/app/generated:rw,delegated'
-      - './htdocs/var:/app/var:rw,delegated'
-      - './htdocs/app/etc:/app/app/etc:rw,delegated'
-      - './htdocs/pub/media:/app/pub/media:rw,delegated'
-      - './htdocs/pub/static:/app/pub/static:rw,delegated'
-      - '~/.composer/cache:/root/.composer/cache:delegated'
+      - './htdocs:/app:rw,delegated'      
+      - '~/.composer/cache:/root/.composer/cache:rw,delegated'
       - './newrelic/newrelic.ini:/usr/local/etc/php/conf.d/newrelic.ini'
+      - './bash/.bash_history:/root/.bash_history:rw,delegated'
     networks:
       magento:
         aliases:
