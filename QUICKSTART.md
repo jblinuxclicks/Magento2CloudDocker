@@ -30,6 +30,12 @@ Download magento from https://magento.com/tech-resources/download
  
 ## 5 Start Containers
 
+Inside `./`
+
+Create bash history file
+
+    touch bash/.bash_history
+
 Copy newrelic.sample.ini config file to newrelic.ini and add new tokens if required
 
     cp newrelic/newrelic.sample.ini newrelic/newrelic.ini

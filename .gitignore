@@ -7,3 +7,4 @@
 *.zip
 *.sql
 /newrelic/newrelic.ini
+/bash/.bash_history
