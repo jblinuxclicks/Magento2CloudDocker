@@ -20,6 +20,7 @@ services:
       - ./mysql/conf:/etc/mysql/conf.d
   redis:
     image: 'redis:3.0'
+    restart: 'always'
     volumes:
       - /data
     ports:
@@ -28,6 +29,7 @@ services:
       - magento
   elasticsearch:
     image: 'domw/magento2-cloud-elasticsearch:7.6'
+    restart: 'always'
     networks:
       - magento      
   phpmyadmin:
