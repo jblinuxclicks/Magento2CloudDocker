@@ -112,7 +112,10 @@ services:
     networks:
       magento:
         aliases:
-          - elasticsearch.magento2.docker                
+          - elasticsearch.magento2.docker
+    ports:
+      - 9200:9200
+      - 9300:9300                         
   # cron:
   #   hostname: cron.magento2.docker
   #   image: 'domw/magento2-cloud-php:7.2-cli'
