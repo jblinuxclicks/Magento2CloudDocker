@@ -24,30 +24,6 @@ services:
     volumes:
       - ./mysql/data:/var/lib/mysql
       - ./mysql/conf:/etc/mysql/conf.d
-  redis:
-    hostname: redis.magento2.docker
-    image: 'redis:5.0'
-    restart: 'always'
-    volumes:
-      - /data
-    ports:
-      - '6379'
-    healthcheck:
-      test: 'redis-cli ping || exit 1'
-      interval: 30s
-      timeout: 30s
-      retries: 3
-    networks:
-      magento:
-        aliases:
-          - redis.magento2.docker
-  elasticsearch:
-    image: 'magento/magento-cloud-docker-elasticsearch:7.7-1.2.0'
-    restart: 'always'
-    networks:
-      magento:
-        aliases:
-          - elasticsearch.magento2.docker      
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     restart: 'always'
@@ -69,6 +45,9 @@ services:
   web:
     image: 'magento/magento-cloud-docker-nginx:1.9-1.2'
     extends: generic
+    ports:
+      - 80:80
+      - 443:443
     hostname: web.magento2.docker
     restart: 'always'
     depends_on:
@@ -126,59 +105,37 @@ services:
     networks:
       magento:
         aliases:
-          - cli.magento2.docker      
-  varnish:
-    hostname: varnish.magento2.docker
-    image: 'magento/magento-cloud-docker-varnish:6.2-1.2.0'
+          - cli.magento2.docker
+  elasticsearch:
+    image: 'magento/magento-cloud-docker-elasticsearch:7.7-1.2.0'
     restart: 'always'
-    ports:
-      - '80:80'
-    depends_on:
-      web:
-        condition: service_started
     networks:
       magento:
         aliases:
-          - varnish.magento2.docker
-  tls:
-    hostname: tls.magento2.docker
-    image: 'magento/magento-cloud-docker-nginx:1.9-1.2'
-    restart: 'always'
+          - elasticsearch.magento2.docker
     ports:
-      - '443:443'
-    external_links:
-      - 'varnish:varnish'
-    depends_on:
-      varnish:
-        condition: service_started
-    networks:
-      magento:
-        aliases:
-          - magento2.docker
+      - 9200:9200
+      - 9300:9300                         
   # cron:
   #   hostname: cron.magento2.docker
-  #   image: 'magento/magento-cloud-docker-php:7.3-cli-1.2.0'
+  #   image: 'domw/magento2-cloud-php:7.2-cli'
   #   extends: generic
   #   command: run-cron
   #   environment:
   #     CRONTAB: '* * * * * root cd /app && /usr/local/bin/php bin/magento cron:run >> /app/var/log/cron.log'
   #   volumes:
   #     - './htdocs:/app:ro,delegated'
-  #     - './htdocs/dev:/app/dev:rw,delegated'
   #     - './htdocs/generated:/app/generated:rw,delegated'
   #     - './htdocs/var:/app/var:rw,delegated'
   #     - './htdocs/app/etc:/app/app/etc:rw,delegated'
   #     - './htdocs/pub/media:/app/pub/media:rw,delegated'
   #     - './htdocs/pub/static:/app/pub/static:rw,delegated'
-  #     - './htdocs/vendor:/app/vendor:rw,delegated'
   #   networks:
   #     magento:
   #       aliases:
   #         - cron.magento2.docker
-  #   depends_on:
-  #     db:
-  #       condition: service_healthy
   # mail:
+  #   hostname: mailhog.magento2.docker
   #   image: mailhog/mailhog:latest
   #   restart: 'always'
   #   ports:
@@ -188,9 +145,7 @@ services:
   #     - fpm
   #     - db
   #   networks:
-  #     magento:
-  #       aliases:
-  #         - mail.magento2.docker
+  #     - magento
   generic:
     hostname: generic.magento2.docker
     image: 'magento/magento-cloud-docker-php:7.3-cli-1.2.0'
