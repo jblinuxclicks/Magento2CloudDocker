@@ -139,7 +139,7 @@ nginx versions: 1.9, 1.10, 1.17
 
 - [Git](https://github.com/DominicWatts/Magento2CloudPHP)
 
-php versions: 7.1, 7.2, 7.3, 7.4
+php versions: 7.0, 7.1, 7.2, 7.3, 7.4
 
 ### php-cli
 
@@ -147,7 +147,7 @@ php versions: 7.1, 7.2, 7.3, 7.4
 
 - [Git](https://github.com/DominicWatts/Magento2CloudPHP)
 
-php versions: 7.1, 7.2, 7.3, 7.4
+php versions: 7.0, 7.1, 7.2, 7.3, 7.4
 
 ### tls
 
